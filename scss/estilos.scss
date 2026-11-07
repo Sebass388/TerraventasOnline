@@ -1,0 +1,254 @@
+/* =============================================================
+   Hoja de estilos PROPIA de TerraventasOnline
+   Estilo EXTERNO: un archivo aparte, enlazado con <link>.
+   Se carga DESPUES de Bootstrap: si dos reglas chocan con la
+   misma fuerza, gana la ultima (esta).
+   ============================================================= */
+
+@use "variables" as *;
+
+@mixin pildora($vertical, $horizontal) {
+    padding: $vertical $horizontal;
+    border-radius: 999px;
+}
+
+/* --- Variables CSS: la paleta de colores y las medidas, en un solo lugar --- */
+/* :root es la raiz de la pagina: las variables definidas aqui se usan en todo el archivo */
+:root {
+    --color-principal: #{$color-principal};   /* verde esmeralda: encabezado y titulos */
+    --color-acento: #{$color-acento};      /* coral: precios y detalles */
+    --color-fondo: #{$color-fondo};       /* verde menta muy claro: fondo */
+    --color-texto: #{$color-texto};       /* casi negro: el texto */
+    --color-suave: #{$color-suave};       /* verde menta: bordes y filas */
+    --radio: #{$radio};                /* esquinas redondeadas */
+    --sombra: #{$sombra};   /* sombra suave: abajo 4px, difuminada 12px, negro al 12 % */
+}
+
+/* --- Selector de ETIQUETA: la pagina entera --- */
+body {
+    font-family: "Poppins", Arial, sans-serif;   /* la fuente de Google Fonts; si no carga, Arial */
+    background-color: var(--color-fondo);        /* var(...) usa el valor de la variable: el fondo claro */
+    color: var(--color-texto);                   /* el color de la letra de toda la pagina */
+}
+
+/* --- Selectores AGRUPADOS: la misma regla para h1, h2 y h3 --- */
+h1, h2, h3 {
+    color: var(--color-principal);   /* titulos en verde esmeralda */
+    font-weight: 700;                /* en negrilla (700 = bold) */
+}
+
+/* --- Selector de CLASE y MODELO DE CAJA --- */
+.encabezado {
+    background-color: var(--color-principal);   /* fondo verde esmeralda */
+    padding: 24px;                 /* relleno: espacio de adentro */
+    margin-bottom: 24px;           /* margen: espacio de afuera, solo abajo */
+    border-radius: var(--radio);   /* esquinas redondeadas */
+    box-shadow: var(--sombra);     /* sombra */
+
+    /* --- Selector DESCENDIENTE: los h1 y p que estan DENTRO de .encabezado --- */
+    h1 {
+        color: white;                  /* el titulo en blanco, para que se lea sobre el verde */
+    }
+
+    p {
+        color: #DDF2EA;                /* el texto del encabezado en verde muy claro */
+    }
+}
+
+/* --- Selector de ID: solo el elemento con id="intro" --- */
+#intro {
+    background-color: white;       /* fondo blanco */
+    padding: 16px 24px;            /* relleno: 16px arriba y abajo, 24px a los lados */
+    margin-bottom: 24px;           /* espacio debajo de la seccion */
+    border-left: 6px solid var(--color-acento);   /* borde solo a la izquierda: 6px, linea continua, coral */
+    border-radius: var(--radio);   /* esquinas redondeadas */
+}
+
+/* --- Selector HIJO (>): solo los enlaces hijos DIRECTOS del menu --- */
+.menu > a {
+    color: white;             /* letra blanca */
+    text-decoration: none;    /* sin subrayado */
+    @include pildora(6px, 16px);
+    border: 2px solid rgba(255, 255, 255, 0.5);   /* borde blanco al 50 % de transparencia */
+    transition: background-color 0.3s, color 0.3s;   /* cambio suave del fondo y la letra en 0,3 segundos */
+}
+
+/* --- Selector de ATRIBUTO: los enlaces que abren otra pestana --- */
+a[target="_blank"] {
+    color: var(--color-principal);   /* en verde esmeralda */
+    font-weight: 700;                /* en negrilla */
+}
+
+/* Clase .precio: el precio de cada producto */
+.precio {
+    color: var(--color-principal);   /* en verde esmeralda */
+    font-size: 1.3rem;               /* 1,3 veces el tamano de letra normal */
+    font-weight: 700;                /* en negrilla */
+}
+
+/* --- Pie de pagina --- */
+.pie {
+    margin-top: 24px;                         /* espacio encima del pie */
+    padding-top: 12px;                        /* relleno arriba, entre la linea y el texto */
+    border-top: 1px solid var(--color-suave); /* una linea fina arriba */
+    color: #52606D;                           /* letra gris */
+    font-size: 0.9rem;                        /* letra un poco mas pequena */
+}
+
+/* --- FLEXBOX: el menu en una fila --- */
+.menu {
+    display: flex;            /* los hijos se ponen en fila */
+    flex-wrap: wrap;          /* si no caben, pasan a otra linea */
+    gap: 8px;                 /* espacio entre los enlaces */
+}
+
+/* --- GRID: las tarjetas en una rejilla de 3 columnas --- */
+.tarjetas {
+    display: grid;                           /* los hijos se acomodan en una rejilla */
+    grid-template-columns: repeat(3, 1fr);   /* 3 columnas del mismo ancho */
+    gap: 16px;                               /* espacio entre las tarjetas */
+    margin-bottom: 24px;                     /* espacio debajo de la rejilla */
+}
+
+/* Cada tarjeta de la rejilla */
+.tarjeta {
+    background-color: white;                  /* fondo blanco */
+    padding: 16px;                            /* relleno de 16px por los 4 lados */
+    border: 1px solid var(--color-suave);     /* borde fino verde menta */
+    border-radius: var(--radio);              /* esquinas redondeadas */
+    box-shadow: var(--sombra);                /* sombra */
+    transition: transform 0.3s;   /* la tarjeta sube con suavidad */
+}
+
+/* --- PSEUDOCLASES: estilos segun el ESTADO del elemento --- */
+.menu > a:hover {                  /* :hover = el mouse esta encima */
+    background-color: white;       /* el fondo se vuelve blanco... */
+    color: var(--color-principal); /* ...y la letra verde */
+}
+
+.menu > a:focus {                  /* :focus = se llego con la tecla Tab */
+    outline: 3px solid var(--color-acento);   /* contorno coral de 3px, para ver donde esta el foco */
+}
+
+.tarjeta:hover {                   /* el mouse esta encima de una tarjeta */
+    transform: translateY(-6px);   /* sube 6 pixeles */
+}
+
+.tarjeta:first-child {             /* :first-child = la primera tarjeta */
+    border-top: 6px solid var(--color-acento);   /* borde coral grueso arriba */
+}
+
+.tarjeta p:nth-child(2) {          /* :nth-child(2) = el segundo hijo de la tarjeta */
+    min-height: 48px;              /* altura minima: asi los textos quedan alineados */
+}
+
+/* --- BOOTSTRAP PERSONALIZADO, sin tocar su archivo --- */
+/* Bootstrap lee los colores de sus botones de variables que empiezan con --bs-.
+   Aqui se les dan otros valores: asi los botones primarios usan los colores de la tienda */
+.btn-primary {
+    --bs-btn-bg: var(--color-principal);               /* fondo del boton: verde */
+    --bs-btn-border-color: var(--color-principal);     /* borde: verde */
+    --bs-btn-hover-bg: var(--color-acento);            /* con el mouse encima: fondo coral */
+    --bs-btn-hover-border-color: var(--color-acento);  /* y borde coral */
+    --bs-btn-hover-color: #1F2933;                     /* y letra oscura */
+}
+
+/* El aviso de Bootstrap (class="alert alert-warning") con el coral de la tienda.
+   Esta regla gana a la de Bootstrap porque estilos.css se carga DESPUES */
+.alert-warning {
+    background-color: #FDECE6;                     /* fondo coral muy claro */
+    border-color: var(--color-acento);             /* borde coral */
+    border-left: 6px solid var(--color-acento);    /* borde grueso solo a la izquierda */
+    border-radius: var(--radio);                   /* esquinas redondeadas */
+}
+
+/* --- Lo que muestra cada producto (las tarjetas las escribe JavaScript) --- */
+/* La etiqueta de la categoria: "Iluminacion", "Energia solar"... */
+.categoria {
+    display: inline-block;                 /* ocupa solo el ancho de su texto */
+    @include pildora(2px, 10px);
+    background-color: var(--color-suave);  /* fondo verde menta */
+    font-size: 0.8rem;                     /* letra pequena: 0,8 del tamano normal */
+}
+
+/* El ahorro de cada producto (kWh y pesos) */
+.ahorro {
+    color: #17744D;          /* en verde */
+    font-weight: 700;        /* en negrilla */
+}
+
+/* --- Filtros: los botones en una fila (Flexbox) --- */
+.filtros {
+    display: flex;           /* los botones en fila */
+    flex-wrap: wrap;         /* si no caben, pasan a otra linea */
+    gap: 8px;                /* espacio entre los botones */
+    margin-bottom: 16px;     /* espacio debajo */
+}
+
+/* Cada boton de filtro */
+.filtro {
+    border: 2px solid var(--color-principal);   /* borde verde */
+    background-color: white;                    /* fondo blanco */
+    color: var(--color-principal);              /* letra verde */
+    @include pildora(6px, 16px);
+    transition: background-color 0.3s;          /* cambio de fondo suave */
+}
+
+/* El boton con el mouse encima (:hover) o el elegido (clase activo, que pone JavaScript).
+   .filtro.activo (sin espacio) = un elemento que tiene LAS DOS clases: filtro y activo */
+.filtro:hover,
+.filtro.activo {
+    background-color: var(--color-principal);   /* fondo verde... */
+    color: white;                               /* ...y letra blanca */
+}
+
+/* --- Catalogo: productos a la izquierda y carrito a la derecha (Grid) --- */
+.catalogo {
+    display: grid;                    /* rejilla */
+    grid-template-columns: 3fr 1fr;   /* 2 columnas: la de productos, 3 veces mas ancha que la del carrito */
+    gap: 16px;                        /* espacio entre las dos */
+    align-items: start;               /* cada columna arriba, sin estirarse */
+}
+
+/* El carrito */
+#carrito {
+    background-color: white;                  /* fondo blanco */
+    border: 2px solid var(--color-acento);    /* borde coral */
+    padding: 16px;                            /* relleno */
+    border-radius: var(--radio);              /* esquinas redondeadas */
+    box-shadow: var(--sombra);                /* sombra */
+    position: sticky;                         /* se queda visible al bajar por la pagina... */
+    top: 16px;                                /* ...a 16px del borde de arriba de la pantalla */
+}
+
+/* --- DISENO RESPONSIVO --- */
+/* @media: estas reglas solo se aplican si la pantalla cumple la condicion */
+/* Hasta 992 pixeles de ancho (tablet): 2 tarjetas por fila */
+@media (max-width: 992px) {
+    .tarjetas {
+        grid-template-columns: repeat(2, 1fr);   /* 2 columnas */
+    }
+
+    .catalogo {
+        grid-template-columns: 1fr;              /* el carrito pasa debajo de los productos */
+    }
+}
+
+/* Celular: 576 pixeles o menos */
+@media (max-width: 576px) {
+    .encabezado {
+        padding: 16px;               /* menos relleno: la pantalla es angosta */
+    }
+
+    .encabezado h1 {
+        font-size: 1.6rem;           /* titulo mas pequeno */
+    }
+
+    .menu {
+        flex-direction: column;      /* el menu en columna */
+    }
+
+    .tarjetas {
+        grid-template-columns: 1fr;  /* una sola columna */
+    }
+}
